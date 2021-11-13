@@ -1,0 +1,437 @@
+
+%%-------------------------------------
+% Notes to the User here -
+% 1) Change " Author+an = {N=highlight}" in "Publications.bib", where N is the number at which your name appears
+% 2) Use "\vspace" wisely, that would change spacing, and is currently being used as a hacky fix
+% 3) Do not delete the fonts in the left side
+% 4) Use the "Rich Text" feature on Overleaf - On the top panel next to source. Makes it much easier for starters on LaTeX to use this template
+% 5) Do NOT use periods at the end of bullet points, the sample (ipsum) text might have it
+% 6) Use "maxbibnames" on this file to change the maximum number of authors on the paper (Credits: Dr. Natasha Krell) - Default is 3, but change line 92 to add authors
+
+%%-------------------------------------
+% Changes from last version (v1.3, October 5, 2021) -
+% 1) Summary statement removed, replaced with 4 keywords on top and Impact statement
+
+% Changes from last version (v1.2, August 23, 2021) -
+% 1) Changes in the Technical Skills section - renamed to just Skills
+% 2) Changed the font size for the name
+% 3) Education to the top
+%%-------------------------------------
+
+
+%%-------------------------------------
+% Changes to be made in the next version -
+% 1) Shift to Class file, make changes here
+% 2) Use a fonts folder
+% 3) Incorporate Leadership & volunteering together
+% 4) Remove \vspace based 'hacky' fixes
+%%-------------------------------------
+
+
+\documentclass[10pt]{article}
+
+%%%%%%% --------------------------------------------------------------------------------------
+%%%%%%%  STARTING HERE, DO NOT TOUCH ANYTHING 
+%%%%%%% --------------------------------------------------------------------------------------
+
+\usepackage{latexsym}
+\usepackage{scrextend}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+ \usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{multicol}
+\usepackage{hyperref}
+\usepackage{csquotes}
+\usepackage{amssymb}
+\usepackage{tabularx}
+\usepackage{amssymb}
+\usepackage[11pt]{moresize}
+\usepackage{setspace}
+\usepackage{fontspec}
+\usepackage[inline]{enumitem}
+\usepackage{array}
+\usepackage{lmodern}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\usepackage{anyfontsize}
+\usepackage{xparse}
+
+\usepackage{xkeyval}
+\makeatletter
+
+%%%% Set Margins
+\usepackage[margin=1cm, top=1cm]{geometry}
+
+%%%% Set Fonts
+\setmainfont[
+    BoldFont=SourceSansPro-Semibold.otf, %SourceSansPro-Bold.otf
+    ItalicFont=SourceSansPro-RegularIt.otf
+]{SourceSansPro-Regular.otf}
+\setsansfont{SourceSansPro-Semibold.otf}
+
+%%%% Set Page
+%\pagestyle{fancy}
+%\fancyhf{} 
+%\fancyfoot{}
+%\renewcommand{\headrulewidth}{0pt}
+%\renewcommand{\footrulewidth}{0pt}
+
+%%%% Set URL Style
+\urlstyle{same}
+
+%%%% Set Indentation
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+%%%% Set Secondary Color
+\definecolor{UI_blue}{RGB}{6, 12, 61}
+\definecolor{UI_url}{RGB}{15, 32, 75}
+\definecolor{UI_gray}{RGB}{33, 33, 33}
+\definecolor{UI_crimson}{RGB}{99, 00, 00}
+\definecolor{UI_scarlet}{RGB}{188, 36, 00}
+
+\hypersetup{colorlinks=true,urlcolor=UI_blue}
+
+%%%% Set Sections formatting
+
+%%%% Set Subsection formatting
+
+
+\NewDocumentEnvironment{resume_sec}{+m +b}{%
+    {
+        \color{UI_scarlet}
+        \bfseries
+        \scshape
+        \raggedright
+        \fontsize{12pt}{14pt}\selectfont
+        #1 \\[-10pt]
+        \hrulefill \\[2pt]
+    }
+    #2
+    \vfill
+} {}
+
+\NewDocumentCommand{\makedate}{+m +m}{
+    {\hfill \fontsize{9}{12pt}\selectfont\color{UI_gray} #1 --- #2}}
+
+% \NewDocumentEnvironment{subsec}{s +m +m +m +m +m +m +b}{%
+%     %\vspace{-0.5cm}
+%     {
+%         \color{UI_blue}
+%         \fontsize{11pt}{13pt}\selectfont
+%         \bfseries
+%         \href{#3}{#2}
+%     }
+%     \makedate{#4}{#5} \\
+%     {
+%         \color{UI_blue}
+%         \fontsize{10pt}{12pt}\selectfont
+%         #6
+%     }
+%     {\hfill\color{UI_gray}\fontsize{9pt}{12pt}\selectfont#7}\\[2pt]
+%     \IfBooleanTF{#1} {#8} {
+%         \vspace{0pt}
+%         \begin{addmargin}[2pt]{40pt}
+%         \begin{itemize}
+%             \fontsize{9.25pt}{12pt}\selectfont 
+%             \color{UI_gray}
+%             #8
+%         \end{itemize}
+%         \end{addmargin}
+%     }
+%     \vspace{12pt}
+% } {}
+
+\define@cmdkeys{subsec} {company,companyurl,position,startdate,enddate,location}
+\NewDocumentEnvironment{subsec}{s +m +b}{%
+    \setkeys{subsec}{#2}%
+    %\vspace{-0.5cm}
+    {
+        \color{UI_blue}
+        \fontsize{11pt}{13pt}\selectfont
+        \bfseries
+        \href{
+            \cmdKV@subsec@companyurl
+        }{
+            \cmdKV@subsec@company
+        }
+    }
+    \makedate{\cmdKV@subsec@startdate}{\cmdKV@subsec@enddate} \\
+    {
+        \color{UI_blue}
+        \fontsize{10pt}{12pt}\selectfont
+        \cmdKV@subsec@position
+    }
+    {%
+        \hfill%
+        \color{UI_gray}%
+        \fontsize{9pt}{12pt}%
+        \selectfont%
+        \cmdKV@subsec@location%
+    }\\[2pt]
+    \IfBooleanTF{#1} {#3} {
+        \vspace{0pt}
+        \begin{addmargin}[2pt]{40pt}
+        \begin{itemize}
+            \fontsize{9.25pt}{12pt}\selectfont 
+            \color{UI_gray}
+            #3
+        \end{itemize}
+        \end{addmargin}
+    }
+    \vspace{10pt}
+} {}
+
+%%%% Set Item Spacing
+\setlist[itemize]{
+    align=parleft,
+    left=0pt..9pt,
+    topsep=0pt,
+    itemsep=1pt,
+    parsep=0pt,
+    partopsep=0pt
+}
+
+%%%% Define Skills Bold Formatting
+\newcommand{\hskills}[1]{ \bfseries #1 }
+
+\usepackage{unicode-math}
+\setmathfont{XITS-Math}
+\renewcommand{\labelitemi}{
+    \raisebox{1.5pt}{
+        \color{UI_scarlet}
+        %$\smblkdiamond$ 
+        \fontsize{4}{12}\selectfont$\blacksquare$
+    }
+}
+%\renewcommand{\labelitemi}{\raisebox{1pt}{\color{UI_scarlet} \fontsize{8}{12} \selectfont $\smblkdiamond$}}
+\renewcommand{\labelitemii}{\raisebox{1pt}{\fontsize{10}{12} \selectfont \textcolor{UI_scarlet}{--}}}
+%\renewcommand{\labelitemii}{\raisebox{3pt}{\fontsize{3}{12} \selectfont \textcolor{UI_scarlet}{$\blacksquare$}}}
+\newcommand{\sep}{
+%    \hspace{.1cm} $\smblkdiamond$  \hspace{.1cm}
+$\smblkdiamond$\hspace{.25cm}
+}
+
+\NewDocumentCommand{\makeheader}
+    {+m +m +o +m +o +m +o +m +o}
+    {
+        \begin{center}
+            {
+                \Huge
+                \fontfamily{lmr}
+                \bfseries
+                #1
+            } \\
+            \vspace{0.25cm} 
+            {\large
+                \IfNoValueTF{#3}{#2}{
+                    \href{#3}{#2}
+                }
+                \IfNoValueTF{#5}{#4}{
+                    \sep
+                    \href{#5}{#4}
+                }
+                \IfNoValueTF{#7}{#6}{
+                    \sep
+                    \href{#7}{#6}
+                }
+                \IfNoValueTF{#9}{#8}{
+                    \sep
+                    \href{#9}{#8}
+                }
+            }
+        \end{center}
+    }
+
+%%%%%%% ----------------------------------------------------------
+%%%%%%%  END OF "DO NOT TOUCH" REGION
+%%%%%%% ----------------------------------------------------------
+
+
+\begin{document}
+
+\makeheader{Ethan Meister}
+    {ethanjmeister@gmail.com}[mailto:ethanjmeister@gmail.com]
+    {224--545--7927}[tel:224-545-7927]
+    {linkedin.com/in/ethan-meister}[https://www.linkedin.com/in/ethan-meister]
+
+\vspace{-0.1cm}
+
+\begin{resume_sec}
+    {Education}
+
+    \begin{subsec}*
+        {
+            company={The Ohio State University},
+            companyurl={https://www.osu.edu/},
+            startdate={Aug 2015},
+            enddate={May 2020},
+            position={Bachelor of Science, Mechanical Engineering},
+            location={Columbus, OH},
+        }
+        \begin{addmargin}[0pt]{0pt}
+                \begin{minipage}[t]{5em}
+                    Capstone:
+                \end{minipage}\begin{minipage}[t]{48em}
+                    \textcolor{UI_gray}{\fontsize{9.5pt}{12pt}\selectfont%
+                        Designed, developed, and prototyped motorized finger that utilizes layer jamming variable stiffness \newline technology, for use in a prosthetic hand
+                    }
+                \end{minipage}
+                
+        \end{addmargin}
+    \end{subsec}
+    \vspace{-2pt}
+\end{resume_sec}
+
+\begin{resume_sec}
+    {Work Experience}
+
+    \begin{subsec}
+        {
+            company={F.E. Moran Fire Protection of Northern Illinois},
+            companyurl={https://www.femoran.com/our-companies/f-e-moran-fire-protection-north/},
+            startdate={Dec 2020},
+            enddate=Present,
+            position={Fire Protection System Designer, Engineering Department},
+            location={Northbrook, Illinois}
+        }
+    
+        \item Designed and planned the implementation of fire protection systems, including both new installations and modifications to preexisting systems
+        \item Collaborated with salesmen, general contractors, and the Authority Having Jurisdiction (AHJ) to determine the scope of work and any constraints on the system design
+        \item Determined additional system constraints by consulting construction drawings, surveying the site, and identifying applicable codes
+        \item Created system designs that optimized for the predetermined, often-competing constraints, including cost, time to implement, system performance, material availability, code adherence, and aesthetics
+        \item Verified system effectiveness using hydraulic calculations, allowing for iterative improvement of the system design for further constraint optimization
+        \item Drafted technical drawings for AHJ approval and to guide the foreman in installation
+    \end{subsec}
+    
+    \begin{subsec}
+        {
+            company={IDEAL Industries},
+            companyurl={https://www.idealindustries.com/us/en.html},
+            startdate={May 2018},
+            enddate={Aug 2019},
+            position={Research and Development Engineering Intern},
+            location={Sycamore, Illinois}
+        }
+        %\item Researched rapid tooling and Austempering
+        %\item Investigated use of 3D printed sand molds, and cast Austempered Ductile Iron (ADI); worked with external companies to orders for prototypes and test specimen; Set up independent external material testing 
+        %\item Managed the Rapid Prototyping lab, which included SLA and FDM Printers (another intern)
+        %\item Received and fulfilled orders from engineers; modified files and printer settings based on the printed part and expected use based on the order – processed finished printed parts and delivered (tweaking for structural elements, determining infeasibility, scheduling)
+        %\item Maintained and performed troubleshooting on both 3D printers
+        %\item Created a novel testing method to measure spirit level accuracy and documented this process in a test plan (hostile conditions)
+        %\item Followed industry standard tool tests - tested tape measures and levels for accuracy (using an optical cooperator - might be useless mentioning it but now its here if you think it fits)  and durability; assisted with strength testing of screwdrivers; tested level vials for UV fade resistance (over the course of weeks)
+        
+        \item Researched the combination of cast Austempered Ductile Iron (ADI) and rapid tooling with 3D-printed sand molds, evaluating their potential to reduce cost of production and changeover time for low-volume products
+        \item Worked with external companies to order ADI prototypes, performing both in-house tests on specimens and arranging independent external material testing
+        \item Managed the Rapid Prototyping lab, which involved working with both SLA and FDM printers and directing a second intern to help in maintaining and troubleshooting operations
+        \item Coordinated the fulfillment of orders from engineers, which often required modifying files and printer settings, working with engineers to fix unprintable elements, determining the acceptable trade-off in quality for reduction in print time, and reorganizing the print schedules based on shifting priorities
+        \item Created a novel testing method to measure accuracy of spirit levels on which standard methods were infeasible, documenting this process in a test plan; additionally followed industry standard tool tests for accuracy and durability of tape measures and levels, strength of screwdrivers, and UV fade resistance of level vials
+    \end{subsec}
+    
+    \begin{subsec}
+        {
+            company={UGN, Inc.},
+            companyurl={https://ugn.com/},
+            startdate={Jun 2017},
+            enddate={Aug 2017},
+            position={Process Engineering Intern},
+            location={Tinley Park, Illinois}
+        }
+        
+        \item Project lead on evaluating the incorporation of downstream materials into a vertically integrated process
+        \item Analyzed potential optimizations for materials, labor, floor space, and shipping and storage logistics
+        \item Collaborated with employees across each of UGN's five plants to collect the data necessary to evaluate prospective modifications to production
+        \item Collected and analyzed quality control data due to high levels of out-of-spec parts being produced; determined and documented the various modes of failure
+    \end{subsec}
+    
+    \vspace{-2pt}
+
+\end{resume_sec}
+
+\begin{resume_sec}
+    {Skills and Distinctions}
+    \vspace{4pt}
+    \begin{tabular}{p{6em} p{48em}}
+        \raisebox{0cm}{\hskills{\hspace{.03cm}Software}}
+        & {\fontsize{9.25pt}{11pt}\selectfont SOLIDWORKS (Dassault Systèmes Associate Certification for Mechanical Design), HSM CAM, ANSYS, Workbench, \newline
+        AutoCAD, HydraCAD, HydraCALC, Navisworks Manage (BIM), MATLAB, Simulink, Autodesk Inventor, Arduino} \\[0.55cm]
+        \raisebox{-.05cm}{\hskills{Technical}} & {\fontsize{9.25pt}{11pt}\selectfont GD\&T, Tormach CNC machine, Bridgeport mill, SLA 3D Printer, FDM 3D Printer, Lathe, Plastic Injection Molding, \newline
+        Robotic Arm Control, Design for Manufacturing, Technical Writing, Basic Auto Repair \& Maintenance} \\
+    \end{tabular}
+\end{resume_sec}
+\vspace{8pt}
+
+
+\begin{resume_sec}
+    {Leadership Experience}
+    \begin{itemize}
+        \item 
+            \textbf{Division 1 NCAA Athlete},
+            The Ohio State Men’s Gymnastics Team
+            \makedate{Aug 2015}{May 2016}
+        
+        \item
+            \textbf{President},
+            The Ohio State Club Gymnastics Team
+            \makedate{Aug 2019}{May 2020}
+        \item
+            \textbf{Logistics Coordinator \& Social Chair},
+            The Ohio State Club Gymnastics Team
+            \makedate{Aug 2018}{May 2019}
+    \end{itemize}
+\end{resume_sec}
+    
+\end{document}
+
+% \subsection*{\href{https://www.femoran.com/our-companies/f-e-moran-fire-protection-north/}{F.E. Moran Fire Protection of Northern Illinois} \hfill Dec 2020 --- Present}
+% Fire Protection System Designer, Engineering Department \hfill Northbrook, Illinois
+    % \begin{itemize}
+    %     % TODO: fix this
+    %     \item Determined the scope of work -- worked with salesman, general contractor, and read construction drawings to determine the design criteria (Determine fire hazard, timeline, sprinkler type, and any other special requirement set by the GC or AHJ)
+ % 
+    %     \item Collected information on existing systems on site
+    %     \begin{itemize}
+    %         \item Determined existing equipment, water supply, and drew any existing piping that was relevant to the area of work
+    %     \end{itemize}
+% 
+    %     \item Planned the installation of a new system, or planned system modifications
+    %     \begin{itemize}
+    %         \item Determined the AHJ and applicable codes for a project – designed the most cost-effective system that met code requirements
+    %         \item Created technical drawings for AHJ to approve and to guide foreman in installation
+    %         \item Performed hydraulic calculations to verify system effectiveness – used the results to modify the system to increase system performance, or optimize costs
+    %     \end{itemize}
+% 
+    %     \item Compiled material needed to install the system
+    % \end{itemize}
+% \subsection*{\href{https://www.idealindustries.com/us/en.html}{IDEAL Industries}\hfill May 2018 --- Aug 2019}
+% Research and Development Engineering Intern \hfill Sycamore, Illinois
+% \begin{itemize}
+%     \item Researched rapid tooling and Austempering
+%     \begin{itemize}
+%         \item Investigated use of 3D printed sand molds, casting, and Austempered Ductile Iron (ADI); worked with external companies to place orders for samples 
+%     \end{itemize}
+%     \item Ran Rapid Prototyping lab – SLA and FDM Printers
+%     \begin{itemize}
+%         \item Received and fulfilled orders from engineers; modified files and printer settings based on the printed part and expected use based on the order – processed finished printed parts and delivered
+%         \item Maintained and performed troubleshooting on both 3D printers
+%     \end{itemize}
+%     \item Created new testing method to measure level accuracy and documented this process in a test plan
+%     \item Followed industry standard tool tests - tested tape measures and levels for accuracy; assisted with strength testing of screwdrivers; tested level vials for UV fade resistance 
+% \end{itemize}
+
+
+% \subsection*{\href{https://ugn.com/}{UGN, Inc.}\hfill Jun 2017 --- Aug 2017}
+% Process Engineering Intern \hfill Tinley Park, Illinois
+% \begin{itemize}
+%     \item Project lead on evaluating process to incorporate downstream materials into a vertically integrated process
+%     \begin{itemize}
+%         \item Analyzed materials and labor reduction, floor space optimization, and shipping logistics
+%         \item Collaborated with employees at every UGN plant to collect the data necessary to evaluate potential modifications to production
+%     \end{itemize}
+%     \item Collected and analyzed data on out-of-spec parts
+%     \item Recorded the number of out-of-spec parts versus total parts due to high levels of out-of-spec parts being produced; determined the reason the part was out-of-spec
+% \end{itemize}
