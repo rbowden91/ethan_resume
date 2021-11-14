@@ -38,7 +38,7 @@
 \usepackage{scrextend}
 \usepackage[empty]{fullpage}
 \usepackage{titlesec}
- \usepackage{marvosym}
+\usepackage{marvosym}
 \usepackage[usenames,dvipsnames]{color}
 \usepackage{verbatim}
 \usepackage[hidelinks]{hyperref}
@@ -100,6 +100,9 @@
 
 %%%% Set Subsection formatting
 
+\setlength{\partopsep}{0em}
+\setlength{\topsep}{0em}
+
 
 \NewDocumentEnvironment{resume_sec}{+m +b}{%
     {
@@ -108,11 +111,14 @@
         \scshape
         \raggedright
         \fontsize{12pt}{14pt}\selectfont
-        #1 \\[-10pt]
-        \hrulefill \\[2pt]
+        #1\\[-10pt]
+        \hrulefill\\
     }
+    \vspace{2pt}
     #2
-    \vfill
+    \unskip
+    \vskip 0pt plus 2fil minus 0fil
+    %\vfill
 } {}
 
 \NewDocumentCommand{\makedate}{+m +m}{
@@ -149,7 +155,6 @@
 \define@cmdkeys{subsec} {company,companyurl,position,startdate,enddate,location}
 \NewDocumentEnvironment{subsec}{s +m +b}{%
     \setkeys{subsec}{#2}%
-    %\vspace{-0.5cm}
     {
         \color{UI_blue}
         \fontsize{11pt}{13pt}\selectfont
@@ -162,9 +167,9 @@
     }
     \makedate{\cmdKV@subsec@startdate}{\cmdKV@subsec@enddate} \\
     {
-        \color{UI_blue}
-        \fontsize{10pt}{12pt}\selectfont
-        \cmdKV@subsec@position
+        \color{UI_blue}%
+        \fontsize{10pt}{12pt}\selectfont%
+        \cmdKV@subsec@position%
     }
     {%
         \hfill%
@@ -174,7 +179,6 @@
         \cmdKV@subsec@location%
     }\\[2pt]
     \IfBooleanTF{#1} {#3} {
-        \vspace{0pt}
         \begin{addmargin}[2pt]{40pt}
         \begin{itemize}
             \fontsize{9.25pt}{12pt}\selectfont 
@@ -182,14 +186,14 @@
             #3
         \end{itemize}
         \end{addmargin}
+        \vskip 0pt plus 1.5fil minus 0fil
     }
-    \vspace{10pt}
 } {}
 
 %%%% Set Item Spacing
 \setlist[itemize]{
     align=parleft,
-    left=0pt..9pt,
+    left=2pt..9pt,
     topsep=0pt,
     itemsep=1pt,
     parsep=0pt,
@@ -197,54 +201,49 @@
 }
 
 %%%% Define Skills Bold Formatting
-\newcommand{\hskills}[1]{ \bfseries #1 }
+\newcommand{\hskills}[1]{\bfseries #1}
 
 \usepackage{unicode-math}
 \setmathfont{XITS-Math}
-\renewcommand{\labelitemi}{
-    \raisebox{1.5pt}{
-        \color{UI_scarlet}
-        %$\smblkdiamond$ 
-        \fontsize{4}{12}\selectfont$\blacksquare$
-    }
+\renewcommand{\labelitemi}{%
+    \raisebox{1.5pt}{%
+        \color{UI_scarlet}%
+        \fontsize{4}{12}\selectfont$\blacksquare$%
+    }%
 }
 %\renewcommand{\labelitemi}{\raisebox{1pt}{\color{UI_scarlet} \fontsize{8}{12} \selectfont $\smblkdiamond$}}
 \renewcommand{\labelitemii}{\raisebox{1pt}{\fontsize{10}{12} \selectfont \textcolor{UI_scarlet}{--}}}
 %\renewcommand{\labelitemii}{\raisebox{3pt}{\fontsize{3}{12} \selectfont \textcolor{UI_scarlet}{$\blacksquare$}}}
-\newcommand{\sep}{
-%    \hspace{.1cm} $\smblkdiamond$  \hspace{.1cm}
-$\smblkdiamond$\hspace{.25cm}
-}
 
+\newcommand{\sep}{$\smblkdiamond$}
 \NewDocumentCommand{\makeheader}
     {+m +m +o +m +o +m +o +m +o}
-    {
-        \begin{center}
+    {%
+        \setlength{\parskip}{0pt}%
+        \begin{center}%
             {
                 \Huge
                 \fontfamily{lmr}
                 \bfseries
                 #1
             } \\
-            \vspace{0.25cm} 
-            {\large
-                \IfNoValueTF{#3}{#2}{
-                    \href{#3}{#2}
-                }
-                \IfNoValueTF{#5}{#4}{
-                    \sep
-                    \href{#5}{#4}
-                }
-                \IfNoValueTF{#7}{#6}{
-                    \sep
-                    \href{#7}{#6}
-                }
-                \IfNoValueTF{#9}{#8}{
-                    \sep
-                    \href{#9}{#8}
-                }
-            }
-        \end{center}
+            \vspace{0.25cm}
+            \begin{minipage}{0.75\linewidth}
+                \large
+                \IfNoValueTF{#3}{#2}{%
+                    \href{#3}{#2}%
+                }%
+                \IfNoValueTF{#5}{#4}{%
+                    \hfill\sep\hfill\href{#5}{#4}%
+                }%
+                \IfNoValueTF{#7}{#6}{%
+                    \hfill\sep\hfill\href{#7}{#6}%
+                }%
+                \IfNoValueTF{#9}{#8}{%
+                    \hfill\sep\hfill\href{#9}{#8}%
+                }%
+            \end{minipage}%
+        \end{center}%
     }
 
 %%%%%%% ----------------------------------------------------------
@@ -254,16 +253,16 @@ $\smblkdiamond$\hspace{.25cm}
 
 \begin{document}
 
-\makeheader{Ethan J. Meister}
+\makeheader
+    {Ethan Meister}
     {ethanjmeister@gmail.com}[mailto:ethanjmeister@gmail.com]
     {224--545--7927}[tel:224-545-7927]
     {linkedin.com/in/ethan-meister}[https://www.linkedin.com/in/ethan-meister]
 
-\vspace{-0.1cm}
+\vspace{4pt}
 
 \begin{resume_sec}
     {Education}
-
     \begin{subsec}*
         {
             company={The Ohio State University},
@@ -281,10 +280,8 @@ $\smblkdiamond$\hspace{.25cm}
                         Designed, developed, and prototyped motorized finger that utilizes layer jamming variable stiffness \newline technology, for use in a prosthetic hand
                     }
                 \end{minipage}
-                
         \end{addmargin}
     \end{subsec}
-    \vspace{-2pt}
 \end{resume_sec}
 
 \begin{resume_sec}
@@ -347,24 +344,21 @@ $\smblkdiamond$\hspace{.25cm}
         \item Collaborated with employees across each of UGN's five plants to collect the data necessary to evaluate prospective modifications to production
         \item Collected and analyzed quality control data due to high levels of out-of-spec parts being produced; determined and documented the various modes of failure
     \end{subsec}
-    
-    \vspace{-2pt}
-
 \end{resume_sec}
 
 \begin{resume_sec}
     {Skills and Distinctions}
     \vspace{4pt}
-    \begin{tabular}{p{6em} p{48em}}
+    \begin{addmargin}{2pt}
+    \begin{tabular}{p{5.5em} p{48em}}
         \raisebox{0cm}{\hskills{\hspace{.03cm}Software}}
         & {\fontsize{9.25pt}{11pt}\selectfont SOLIDWORKS (Dassault Systèmes Associate Certification for Mechanical Design), HSM CAM, ANSYS, Workbench, \newline
         AutoCAD, HydraCAD, HydraCALC, Navisworks Manage (BIM), MATLAB, Simulink, Autodesk Inventor, Arduino} \\[0.55cm]
-        \raisebox{-.05cm}{\hskills{Technical}} & {\fontsize{9.25pt}{11pt}\selectfont GD\&T, Tormach CNC machine, Bridgeport mill, SLA 3D Printer, FDM 3D Printer, Lathe, Plastic Injection Molding, \newline
+        \hskills{Technical} & {\fontsize{9.25pt}{11pt}\selectfont GD\&T, Tormach CNC machine, Bridgeport mill, SLA 3D Printer, FDM 3D Printer, Lathe, Plastic Injection Molding, \newline
         Robotic Arm Control, Design for Manufacturing, Technical Writing, Basic Auto Repair \& Maintenance} \\
     \end{tabular}
+    \end{addmargin}
 \end{resume_sec}
-\vspace{8pt}
-
 
 \begin{resume_sec}
     {Leadership Experience}
@@ -384,7 +378,7 @@ $\smblkdiamond$\hspace{.25cm}
             \makedate{Aug 2018}{May 2019}
     \end{itemize}
 \end{resume_sec}
-    
+\unskip
 \end{document}
 
 % \subsection*{\href{https://www.femoran.com/our-companies/f-e-moran-fire-protection-north/}{F.E. Moran Fire Protection of Northern Illinois} \hfill Dec 2020 --- Present}
